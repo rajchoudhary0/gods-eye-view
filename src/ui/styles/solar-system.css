@@ -1,0 +1,199 @@
+/* ── Solar-system view ─────────────────────────────── */
+#solar-system-view {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  color: #dfeaf5;
+  background: #02040a;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  opacity: 0;
+  transition: opacity 600ms ease;
+}
+#solar-system-view.is-on {
+  opacity: 1;
+}
+.ss-stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.ss-stage canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: grab;
+  touch-action: none;
+}
+.ss-stage canvas:active {
+  cursor: grabbing;
+}
+.ss-labels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.ss-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-top: -0.5em;
+  font-size: 11px;
+  white-space: nowrap;
+  color: rgba(220, 235, 255, 0.9);
+  text-shadow: 0 0 4px #000, 0 0 2px #000;
+}
+.ss-label.moon,
+.ss-label.small {
+  font-size: 10px;
+  opacity: 0.75;
+}
+.ss-head {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  padding: 0.7rem 1rem;
+  background: linear-gradient(rgba(2, 4, 10, 0.85), transparent);
+}
+.ss-date {
+  margin-right: auto;
+  opacity: 0.8;
+  font-size: 0.8rem;
+}
+.ss-speeds {
+  display: flex;
+  gap: 4px;
+}
+.ss-hint {
+  position: absolute;
+  left: 1rem;
+  bottom: 0.8rem;
+  margin: 0;
+  font-size: 0.72rem;
+  opacity: 0.55;
+}
+#solar-system-view button {
+  color: inherit;
+  font: inherit;
+  font-size: 0.78rem;
+  background: rgba(10, 16, 30, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 6px;
+  padding: 0.3rem 0.6rem;
+  cursor: pointer;
+}
+#solar-system-view button[aria-pressed='true'],
+#solar-system-view button[aria-selected='true'] {
+  border-color: #4fe3ff;
+  background: rgba(79, 227, 255, 0.16);
+}
+.ss-close {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.ss-side {
+  position: absolute;
+  top: 3.6rem;
+  right: 0.8rem;
+  bottom: 0.8rem;
+  width: min(360px, 44vw);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.7rem;
+  overflow-y: auto;
+  background: rgba(6, 10, 20, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  backdrop-filter: blur(6px);
+}
+.ss-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.ss-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 34vh;
+  overflow-y: auto;
+  flex: none;
+}
+.ss-list li button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  text-align: left;
+  border: 0;
+  background: none;
+  border-radius: 4px;
+}
+.ss-list li.ss-moon button {
+  padding-left: 1.6rem;
+  font-size: 0.74rem;
+  opacity: 0.85;
+}
+.ss-list li button small {
+  margin-left: auto;
+  opacity: 0.6;
+  font-size: 0.7rem;
+}
+.ss-list i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex: none;
+}
+.ss-group {
+  margin-top: 0.4rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+.ss-card h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+.ss-kind,
+.ss-note {
+  margin: 0.2rem 0 0.5rem;
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+.ss-card dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.2rem 0.8rem;
+  margin: 0;
+  font-size: 0.75rem;
+}
+.ss-card dt {
+  opacity: 0.6;
+}
+.ss-card dd {
+  margin: 0;
+  text-align: right;
+}
+.ss-card a {
+  color: #4fe3ff;
+  font-size: 0.75rem;
+}
+@media (max-width: 720px) {
+  .ss-side {
+    width: auto;
+    left: 0.8rem;
+    top: auto;
+    height: 46vh;
+  }
+  .ss-hint {
+    display: none;
+  }
+}

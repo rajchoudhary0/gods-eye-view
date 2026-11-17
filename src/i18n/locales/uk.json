@@ -4286,5 +4286,21 @@
   "Full screen": "На весь екран",
   "Place labels on": "Назви місць увімкнено",
   "Place labels off": "Назви місць вимкнено",
-  "Show or hide place labels": "Показати або сховати назви місць"
+  "Show or hide place labels": "Показати або сховати назви місць",
+  "Planets": "Планети",
+  "Small bodies": "Малі тіла",
+  "Meteor showers": "Метеорні потоки",
+  "Solar system": "Сонячна система",
+  "Time speed": "Швидкість часу",
+  "Back to Earth": "Назад до Землі",
+  "Orbits of the planets": "Орбіти планет",
+  "Loading NASA/JPL data…": "Завантаження даних NASA/JPL…",
+  "NASA/JPL data is unavailable right now": "Дані NASA/JPL зараз недоступні",
+  "Close approaches, next 60 days": "Зближення із Землею найближчі 60 днів",
+  "Recent fireballs": "Нещодавні боліди",
+  "More at NASA": "Докладніше на сайті NASA",
+  "Open solar system view": "Відкрити вигляд Сонячної системи",
+  "Overview": "Огляд",
+  "Asteroids and comets": "Астероїди та комети",
+  "Drag to rotate · scroll to zoom · click a body to fly to it": "Перетягуйте для обертання · прокрутка для масштабу · натисніть на тіло, щоб долетіти"
 }

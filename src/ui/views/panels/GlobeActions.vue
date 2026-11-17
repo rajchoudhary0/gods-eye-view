@@ -3,6 +3,7 @@ import { storeToRefs } from 'pinia';
 import { computed, ref } from 'vue';
 import { t } from '../../../i18n/index.js';
 import { useGlobeActionsStore } from '../../stores/globeActions.js';
+import { useSolarSystemStore } from '../../stores/solarSystem.js';
 import GlobeCompass from './GlobeCompass.vue';
 
 // The top-center camera and share actions. The shell answers the buttons
@@ -13,6 +14,7 @@ import GlobeCompass from './GlobeCompass.vue';
 const globe = useGlobeActionsStore();
 const { clearBusy, resetBusy, camera } = storeToRefs(globe);
 const { act } = globe;
+const solar = useSolarSystemStore();
 const labelsOn = ref(true);
 const tilted = computed(() => Boolean(camera.value?.tilted));
 </script>
@@ -30,6 +32,9 @@ const tilted = computed(() => Boolean(camera.value?.tilted));
   </button>
   <button id="toggle-place-labels" type="button" :aria-label="t('Show or hide place labels')" :aria-pressed="String(labelsOn)" :title="t('Show or hide place labels')" @click="labelsOn = !labelsOn; act('labels')">
     <span class="material-symbols-outlined" aria-hidden="true">label</span>
+  </button>
+  <button id="open-solar-system" type="button" :aria-label="t('Open solar system view')" :title="t('Open solar system view')" @click="solar.toggle()">
+    <span class="material-symbols-outlined" aria-hidden="true">travel_explore</span>
   </button>
   <GlobeCompass @click="act('northUp')" />
   <button id="reset-globe-view" type="button" :aria-label="resetBusy ? t('Resetting to full globe view') : t('Reset to full globe view')" :title="t('Reset camera and return to full globe view')" @click="act('reset')">

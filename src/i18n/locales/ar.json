@@ -4472,5 +4472,21 @@
   "Full screen": "ملء الشاشة",
   "Place labels on": "تشغيل أسماء الأماكن",
   "Place labels off": "إيقاف أسماء الأماكن",
-  "Show or hide place labels": "إظهار أسماء الأماكن أو إخفاؤها"
+  "Show or hide place labels": "إظهار أسماء الأماكن أو إخفاؤها",
+  "Planets": "الكواكب",
+  "Small bodies": "الأجرام الصغيرة",
+  "Meteor showers": "زخات الشهب",
+  "Solar system": "النظام الشمسي",
+  "Time speed": "سرعة الزمن",
+  "Back to Earth": "العودة إلى الأرض",
+  "Orbits of the planets": "مدارات الكواكب",
+  "Loading NASA/JPL data…": "جارٍ تحميل بيانات ناسا/JPL…",
+  "NASA/JPL data is unavailable right now": "بيانات ناسا/JPL غير متاحة حاليًا",
+  "Close approaches, next 60 days": "الاقترابات من الأرض خلال 60 يومًا",
+  "Recent fireballs": "الكرات النارية الأخيرة",
+  "More at NASA": "المزيد لدى ناسا",
+  "Open solar system view": "فتح عرض النظام الشمسي",
+  "Overview": "نظرة عامة",
+  "Asteroids and comets": "الكويكبات والمذنبات",
+  "Drag to rotate · scroll to zoom · click a body to fly to it": "اسحب للتدوير · مرّر للتكبير · انقر على جرم للانتقال إليه"
 }

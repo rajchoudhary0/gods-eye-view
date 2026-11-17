@@ -37,7 +37,10 @@ import {
   setCyberSonarControls,
 } from './cyberSonarControls.js';
 
-import { toDegrees, toRadians } from '../geo/index.js';
+import { magnitude, toDegrees, toRadians } from '../geo/index.js';
+
+// Camera height past which a further zoom-out opens the solar-system view.
+const SOLAR_ZOOM_OUT_M = 36_000_000;
 // A viewer with no renderer bound gets its ports (camera, effects, globe)
 // once its owner has loaded the package's `./render/cesium/unbound` export.
 import { cameraOf, canvasOf, findCamera } from '../render/rendererOf.js';
@@ -77,6 +80,7 @@ import { installEntityContext } from './entityContextBridge.js';
 import { installRailEdgeScroll } from './railEdgeScroll.js';
 import { useCockpitStore } from './stores/cockpit.js';
 import { useGlobeActionsStore } from './stores/globeActions.js';
+import { useSolarSystemStore } from './stores/solarSystem.js';
 import { useRecordingStore } from './stores/recording.js';
 import { onPlacePacksLoadingChange } from '../data/placeBelow.js';
 import { withPlacePacks } from './placePacksLoading.js';
@@ -675,6 +679,7 @@ export class StyleManager extends ShellFacade {
     this._initMobileShell();
     this._initShareButton();
     this._initCameraOrientationControls();
+    this._initSolarZoomOut();
     this._initClearSelectedLayersButton();
     this._initHUDToggle();
     this._initModels3dToggle();
@@ -1751,6 +1756,44 @@ export class StyleManager extends ShellFacade {
     this._resetToken = null;
   }
 
+  /**
+   * Zooming out past the globe's own ceiling opens the solar-system view:
+   * a wheel step outward while the camera is already near its highest.
+   */
+  _initSolarZoomOut() {
+    this._offSolarZoomOut?.();
+    const store = useSolarSystemStore(applicationPinia());
+    const pose = () => {
+      try {
+        return findCamera(this.viewer)?.pose() ?? null;
+      } catch {
+        return null;
+      }
+    };
+    // The globe camera as geocentric latitude, longitude and height, for the
+    // solar-system view to start from the same view of Earth.
+    // ponytail: 6.371e6 is a spherical Earth radius; fine for framing.
+    store.setViewReader(() => {
+      const p = pose()?.position;
+      if (!p) return null;
+      return {
+        lat: toDegrees(Math.atan2(p.z, Math.hypot(p.x, p.y))),
+        lon: toDegrees(Math.atan2(p.y, p.x)),
+        heightM: magnitude(p) - 6.371e6,
+      };
+    });
+    const canvas = canvasOf(this.viewer);
+    const onWheel = (event) => {
+      const p = pose()?.position;
+      if (event.deltaY > 0 && p && magnitude(p) - 6.371e6 > SOLAR_ZOOM_OUT_M) store.open = true;
+    };
+    canvas?.addEventListener?.('wheel', onWheel, { passive: true });
+    this._offSolarZoomOut = () => {
+      canvas?.removeEventListener?.('wheel', onWheel);
+      store.setViewReader(null);
+    };
+  }
+
   /** The place-name overlay layer, added on first use; null when the engine has none. */
   _ensurePlaceLabels() {
     if (this._placeLabels) return this._placeLabels;
@@ -1945,6 +1988,7 @@ export class StyleManager extends ShellFacade {
     useDisplayStore(applicationPinia()).connectMapSource(null);
     useDisplayStore(applicationPinia()).publishMapSource(null);
     this._cameraOrientationControls?.destroy();
+    this._offSolarZoomOut?.();
     this._releaseGlobeActions();
     this._cctvControls?.destroy();
     this.services?.streetLevelLayer?.attachNavigation?.(null);

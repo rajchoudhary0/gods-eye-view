@@ -4193,5 +4193,21 @@
   "Full screen": "Pantalla completa",
   "Place labels on": "Etiquetas de lugares activadas",
   "Place labels off": "Etiquetas de lugares desactivadas",
-  "Show or hide place labels": "Mostrar u ocultar etiquetas de lugares"
+  "Show or hide place labels": "Mostrar u ocultar etiquetas de lugares",
+  "Planets": "Planetas",
+  "Small bodies": "Cuerpos menores",
+  "Meteor showers": "Lluvias de meteoros",
+  "Solar system": "Sistema solar",
+  "Time speed": "Velocidad del tiempo",
+  "Back to Earth": "Volver a la Tierra",
+  "Orbits of the planets": "Órbitas de los planetas",
+  "Loading NASA/JPL data…": "Cargando datos de NASA/JPL…",
+  "NASA/JPL data is unavailable right now": "Los datos de NASA/JPL no están disponibles ahora",
+  "Close approaches, next 60 days": "Aproximaciones a la Tierra, próximos 60 días",
+  "Recent fireballs": "Bólidos recientes",
+  "More at NASA": "Más en la NASA",
+  "Open solar system view": "Abrir la vista del sistema solar",
+  "Overview": "Vista general",
+  "Asteroids and comets": "Asteroides y cometas",
+  "Drag to rotate · scroll to zoom · click a body to fly to it": "Arrastra para girar · desplaza para acercar · pulsa un cuerpo para volar hasta él"
 }

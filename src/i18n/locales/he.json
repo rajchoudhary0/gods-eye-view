@@ -4193,5 +4193,21 @@
   "Full screen": "מסך מלא",
   "Place labels on": "שמות מקומות פועלים",
   "Place labels off": "שמות מקומות כבויים",
-  "Show or hide place labels": "הצגה או הסתרה של שמות מקומות"
+  "Show or hide place labels": "הצגה או הסתרה של שמות מקומות",
+  "Planets": "כוכבי לכת",
+  "Small bodies": "גופים קטנים",
+  "Meteor showers": "מטרי מטאורים",
+  "Solar system": "מערכת השמש",
+  "Time speed": "מהירות הזמן",
+  "Back to Earth": "חזרה לכדור הארץ",
+  "Orbits of the planets": "מסלולי כוכבי הלכת",
+  "Loading NASA/JPL data…": "טוען נתוני NASA/JPL…",
+  "NASA/JPL data is unavailable right now": "נתוני NASA/JPL אינם זמינים כרגע",
+  "Close approaches, next 60 days": "התקרבויות לכדור הארץ ב-60 הימים הקרובים",
+  "Recent fireballs": "כדורי אש אחרונים",
+  "More at NASA": "עוד אצל נאס״א",
+  "Open solar system view": "פתיחת תצוגת מערכת השמש",
+  "Overview": "סקירה כללית",
+  "Asteroids and comets": "אסטרואידים ושביטים",
+  "Drag to rotate · scroll to zoom · click a body to fly to it": "גררו לסיבוב · גללו להגדלה · לחצו על גוף כדי לטוס אליו"
 }
