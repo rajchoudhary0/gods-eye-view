@@ -1780,6 +1780,7 @@ export class StyleManager extends ShellFacade {
         lat: toDegrees(Math.atan2(p.z, Math.hypot(p.x, p.y))),
         lon: toDegrees(Math.atan2(p.y, p.x)),
         heightM: magnitude(p) - 6.371e6,
+        fovy: pose()?.fovy,
       };
     });
     // The reverse: place the globe camera where the solar view looked at Earth, so

@@ -88,8 +88,10 @@ export class SolarScene {
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(60, 1, 1e-10, 1e6);
     this.camera.up.set(0, 0, 1);
-    this.scene.add(new THREE.AmbientLight(0xffffff, 0.16));
-    this.scene.add(new THREE.PointLight(0xffffff, 1.5, 0, 0));
+    this.ambient = new THREE.AmbientLight(0xffffff, 0.16);
+    this.sunLight = new THREE.PointLight(0xffffff, 1.5, 0, 0);
+    this.scene.add(this.ambient, this.sunLight);
+    this.goalLog = null; // where a wheel zoom is easing to
     this.bodies = new Map();
     this.small = new Map();
     this.speed = 1;
@@ -149,7 +151,7 @@ export class SolarScene {
   buildPlanet(p) {
     const textured = hasTrekTexture(p.id) || p.id === 'earth';
     const b = this.makeBody({ ...p, radiusKm: p.radiusKm, map: textured ? null : proceduralTexture(p.id, p.color) });
-    b.mat.color.set(textured ? 0x9aa0aa : 0xffffff);
+    b.mat.color.set(p.id === 'earth' ? 0x2f5f9f : textured ? 0x9aa0aa : 0xffffff); // a placeholder until the texture arrives
     if (p.id === 'earth') loadEarthTexture((t) => { b.mat.map = t; b.mat.color.set(0xffffff); b.mat.needsUpdate = true; });
     else if (textured) loadTrekTexture(p.id, (t) => { b.mat.map = t; b.mat.color.set(0xffffff); b.mat.needsUpdate = true; });
     if (p.id === 'saturn') {
@@ -274,6 +276,8 @@ export class SolarScene {
       this.pitch = Math.asin(dir.z);
       this.target = earth.pos.clone();
       this.logDist = Math.log(EARTH_R_AU + view.heightM / 1000 / AU_KM);
+      this.camera.fov = (view.fovy ?? 1.0472) / RAD; // same lens as the globe, so Earth is the same size
+      this.startLog = this.logDist;
       this.focusId = 'earth';
       this.returnAt = this.logDist - 0.15; // zoom in this far past the globe's framing to hand back to it
     } else this.flyTo('sun', { distance: 14, instant: true });
@@ -298,6 +302,7 @@ export class SolarScene {
     if (!this.bodies.has(id) && !this.small.has(id)) return;
     const logTo = distance ? Math.log(distance) : this.focusDistance(id);
     const goal = { id, logDist: logTo, yaw: yaw ?? this.yaw, pitch: pitch ?? Math.max(-1.2, Math.min(1.2, this.pitch)) };
+    this.goalLog = null;
     if (instant) {
       Object.assign(this, { focusId: id, logDist: goal.logDist, yaw: goal.yaw, pitch: goal.pitch, flight: null });
       this.target = this.positionOf(id);
@@ -339,10 +344,10 @@ export class SolarScene {
       e.preventDefault();
       const min = this.minLogDist();
       this.flight = null;
-      this.logDist = Math.max(min, Math.min(Math.log(400), this.logDist + e.deltaY * 0.003));
+      this.goalLog = Math.max(min, Math.min(Math.log(400), (this.goalLog ?? this.logDist) + e.deltaY * 0.003));
       this.onArrive = null;
       // Zooming in on Earth down to the globe's own framing hands over to the globe.
-      if (e.deltaY < 0 && this.focusId === 'earth' && this.logDist < this.returnAt) this.onReturn?.();
+      if (e.deltaY < 0 && this.focusId === 'earth' && this.goalLog < this.returnAt) this.onReturn?.();
     }, { passive: false });
   }
 
@@ -417,7 +422,18 @@ export class SolarScene {
       if (k === 1) { this.flight = null; const cb = this.onArrive; this.onArrive = null; cb?.(); }
     } else {
       this.target.copy(this.positionOf(this.focusId));
+      if (this.goalLog != null) {
+        this.logDist += (this.goalLog - this.logDist) * 0.16; // ease the wheel zoom
+        if (Math.abs(this.goalLog - this.logDist) < 1e-4) this.goalLog = null;
+      }
     }
+    // Near Earth the scene is lit like the globe (even daylight) and fades to real sunlight as you pull away.
+    const k = this.focusId === 'earth' && this.startLog != null ? Math.max(0, Math.min(1, 1 - (this.logDist - this.startLog) / 2.5)) : 0;
+    this.ambient.intensity = 0.16 + 0.8 * k;
+    this.sunLight.intensity = 1.5 - 1.2 * k;
+    this.k = k;
+    const earthMat = this.bodies.get('earth').mat;
+    if (earthMat.map) earthMat.color.setScalar(1 + 0.5 * k); // Blue Marble's oceans are darker than the globe's imagery
     const dist = Math.exp(this.logDist);
     const dir = new THREE.Vector3(Math.cos(this.pitch) * Math.cos(this.yaw), Math.cos(this.pitch) * Math.sin(this.yaw), Math.sin(this.pitch));
     this.camera.position.copy(this.target).addScaledVector(dir, dist);
@@ -463,7 +479,7 @@ export class SolarScene {
         b.near = camToParent < maxA * 35 || focusBody?.parent === b.parent || focusBody?.id === b.parent;
       }
       const show = moon ? b.near : true;
-      const shown = place(b, b.radiusAU, show);
+      const shown = place(b, b.radiusAU, show, b.id === 'earth' && this.k > 0.3 ? false : undefined);
       b.group.visible = show;
       b.group.position.copy(b.pos);
       b.group.scale.setScalar(shown);

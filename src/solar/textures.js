@@ -137,7 +137,11 @@ export function ringTexture() {
 
 /** Earth's NASA Blue Marble, as soon as it arrives. */
 export function loadEarthTexture(apply) {
-  new THREE.TextureLoader().setCrossOrigin('anonymous').load(`${GIBS}BlueMarble_NextGeneration`, (t) => apply(finish(t)), undefined, () => {});
+  // A small image first so Earth is never blank, then the 4096-wide one.
+  for (const w of [1024, 4096]) {
+    const url = `${GIBS.replace('WIDTH=4096&HEIGHT=2048', `WIDTH=${w}&HEIGHT=${w / 2}`)}BlueMarble_NextGeneration`;
+    new THREE.TextureLoader().setCrossOrigin('anonymous').load(url, (t) => apply(finish(t)), undefined, () => {});
+  }
 }
 
 /** A NASA Trek global mosaic stitched from 32 tiles (level 2: 8 x 4). */
