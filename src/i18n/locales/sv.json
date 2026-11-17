@@ -4095,5 +4095,8 @@
   "KT": "KT",
   "Course to {code}: {course}": "Kurs mot {code}: {course}",
   "Over {place}": "Över {place}",
-  "Below": "Nedanför"
+  "Below": "Nedanför",
+  "Place labels on": "Ortnamn på",
+  "Place labels off": "Ortnamn av",
+  "Show or hide place labels": "Visa eller dölj ortnamn"
 }

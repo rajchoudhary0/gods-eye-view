@@ -4188,5 +4188,8 @@
   "KT": "KT",
   "Course to {code}: {course}": "Rumo para {code}: {course}",
   "Over {place}": "Sobre {place}",
-  "Below": "Abaixo"
+  "Below": "Abaixo",
+  "Place labels on": "Rótulos de lugares ativados",
+  "Place labels off": "Rótulos de lugares desativados",
+  "Show or hide place labels": "Mostrar ou ocultar rótulos de lugares"
 }

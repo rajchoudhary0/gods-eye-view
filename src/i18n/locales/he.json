@@ -4188,5 +4188,8 @@
   "KT": "KT",
   "Course to {code}: {course}": "כיוון אל {code}: {course}",
   "Over {place}": "מעל {place}",
-  "Below": "מתחת"
+  "Below": "מתחת",
+  "Place labels on": "שמות מקומות פועלים",
+  "Place labels off": "שמות מקומות כבויים",
+  "Show or hide place labels": "הצגה או הסתרה של שמות מקומות"
 }

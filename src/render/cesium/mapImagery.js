@@ -25,6 +25,15 @@ export function createEsriImagery() {
   );
 }
 
+/** Transparent place-name tiles (no key) for drawing over any base imagery. */
+export function createEsriLabelsImagery() {
+  return new Cesium.UrlTemplateImageryProvider({
+    url: 'https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',
+    maximumLevel: 19,
+    credit: ESRI_IMAGERY_CREDIT,
+  });
+}
+
 export function createIonImagery(style, accessToken) {
   accessToken = String(accessToken || '').trim();
   if (!accessToken) throw new Error('Ion imagery requires an explicit token');
