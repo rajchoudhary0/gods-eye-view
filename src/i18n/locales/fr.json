@@ -4193,5 +4193,19 @@
   "Full screen": "Plein écran",
   "Place labels on": "Noms de lieux activés",
   "Place labels off": "Noms de lieux désactivés",
-  "Show or hide place labels": "Afficher ou masquer les noms de lieux"
+  "Show or hide place labels": "Afficher ou masquer les noms de lieux",
+  "Planets": "Planètes",
+  "Small bodies": "Petits corps",
+  "Meteor showers": "Pluies de météores",
+  "Solar system": "Système solaire",
+  "Time speed": "Vitesse du temps",
+  "Today": "Aujourd’hui",
+  "Back to Earth": "Retour à la Terre",
+  "Orbits of the planets": "Orbites des planètes",
+  "Loading NASA/JPL data…": "Chargement des données NASA/JPL…",
+  "NASA/JPL data is unavailable right now": "Les données NASA/JPL sont indisponibles pour le moment",
+  "Close approaches, next 60 days": "Approches de la Terre, 60 prochains jours",
+  "Recent fireballs": "Bolides récents",
+  "More at NASA": "Plus d’infos sur la NASA",
+  "Open solar system view": "Ouvrir la vue du système solaire"
 }

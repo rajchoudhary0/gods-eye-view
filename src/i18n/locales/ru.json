@@ -4286,5 +4286,19 @@
   "Full screen": "Во весь экран",
   "Place labels on": "Названия мест включены",
   "Place labels off": "Названия мест выключены",
-  "Show or hide place labels": "Показать или скрыть названия мест"
+  "Show or hide place labels": "Показать или скрыть названия мест",
+  "Planets": "Планеты",
+  "Small bodies": "Малые тела",
+  "Meteor showers": "Метеорные потоки",
+  "Solar system": "Солнечная система",
+  "Time speed": "Скорость времени",
+  "Today": "Сегодня",
+  "Back to Earth": "Назад к Земле",
+  "Orbits of the planets": "Орбиты планет",
+  "Loading NASA/JPL data…": "Загрузка данных NASA/JPL…",
+  "NASA/JPL data is unavailable right now": "Данные NASA/JPL сейчас недоступны",
+  "Close approaches, next 60 days": "Сближения с Землёй в ближайшие 60 дней",
+  "Recent fireballs": "Недавние болиды",
+  "More at NASA": "Подробнее на сайте NASA",
+  "Open solar system view": "Открыть вид Солнечной системы"
 }
