@@ -9,6 +9,7 @@ import { allocateSourceCap, resolveCatalogCap } from './cap.js';
 import { loadGroundHeights, joinGroundHeights } from './groundHeights.js';
 import { cameraRegion, normalizeSourceItem } from './normalize.js';
 import { loadLithuaniaSources } from './lithuania.js';
+import { loadNztaSources } from './nzta.js';
 import { loadOttawaSourcesFromOpenData } from './ottawa.js';
 import { loadQuebecSources, QUEBEC_CAMERA_SOURCE_COUNT } from './quebec.js';
 import { loadTaiwanSources } from './taiwan.js';
@@ -171,6 +172,13 @@ const LIVE_PACKS = [
     name: 'lithuania',
     enabled: () => envOptIn('CCTV_LITHUANIA_ENABLED'),
     load: loadLithuaniaSources,
+  },
+  {
+    // Opt-in until NZTA confirms the camera images are open-licensed (see
+    // DATA_SOURCES.md).
+    name: 'nzta',
+    enabled: () => envOptIn('CCTV_NZTA_ENABLED'),
+    load: loadNztaSources,
   },
   {
     // FL511's terms limit its content to individual, personal use (other use
