@@ -76,7 +76,8 @@ function smallBodyPosition(el, jd) {
 }
 
 export class SolarScene {
-  constructor(canvas, labelLayer, { onPick, onFocus } = {}) {
+  constructor(canvas, labelLayer, { onPick, onFocus, onReturn } = {}) {
+    this.onReturn = onReturn;
     this.canvas = canvas;
     this.labelLayer = labelLayer;
     this.onPick = onPick;
@@ -101,6 +102,8 @@ export class SolarScene {
     this.focusId = 'sun';
     this.flight = null;
     this.stopped = false;
+    this.showOrbits = true;
+    this.inset = false; // true while the side panel covers the right of the view
     this.buildSky();
     this.buildSun();
     PLANETS.forEach((p) => this.buildPlanet(p));
@@ -258,7 +261,7 @@ export class SolarScene {
     return Math.log(b ? b.radiusAU * 3.4 : 0.05);
   }
 
-  /** Begin at Earth framed as the globe was (`view`: {lat, lon, heightM}), then pull out. */
+  /** Begin at Earth framed as the globe was (`view`: {lat, lon, heightM}); the user zooms out from there. */
   intro(view) {
     this.update();
     const earth = this.bodies.get('earth');
@@ -272,12 +275,26 @@ export class SolarScene {
       this.target = earth.pos.clone();
       this.logDist = Math.log(EARTH_R_AU + view.heightM / 1000 / AU_KM);
       this.focusId = 'earth';
-      this.flyTo('sun', { distance: 14, pitch: 0.75, yaw: Math.atan2(-earth.pos.y, -earth.pos.x) + 0.5, duration: 6500 });
+      this.returnAt = this.logDist - 0.15; // zoom in this far past the globe's framing to hand back to it
     } else this.flyTo('sun', { distance: 14, instant: true });
   }
 
+  /** Where the camera looks at Earth, as the globe would be placed ({lat, lon, heightM}). */
+  earthView() {
+    const earth = this.bodies.get('earth');
+    const dir = new THREE.Vector3(Math.cos(this.pitch) * Math.cos(this.yaw), Math.cos(this.pitch) * Math.sin(this.yaw), Math.sin(this.pitch))
+      .applyQuaternion(earth.group.quaternion.clone().invert());
+    return { lat: Math.asin(dir.z) / RAD, lon: Math.atan2(dir.y, dir.x) / RAD, heightM: (Math.exp(this.logDist) - EARTH_R_AU) * AU_KM * 1000 };
+  }
+
+  /** The whole system from straight above ('top') or edge-on ('side'), X to the right. */
+  systemView(mode) {
+    const distance = this.focusId === 'sun' ? Math.min(70, Math.max(8, Math.exp(this.logDist))) : 50;
+    this.flyTo('sun', { distance, yaw: -Math.PI / 2, pitch: mode === 'top' ? 1.5 : 0.06, duration: 2500, silent: true });
+  }
+
   /** Fly the camera to a body: its target follows the body as it moves. */
-  flyTo(id, { distance, yaw, pitch, duration, instant } = {}) {
+  flyTo(id, { distance, yaw, pitch, duration, instant, silent } = {}) {
     if (!this.bodies.has(id) && !this.small.has(id)) return;
     const logTo = distance ? Math.log(distance) : this.focusDistance(id);
     const goal = { id, logDist: logTo, yaw: yaw ?? this.yaw, pitch: pitch ?? Math.max(-1.2, Math.min(1.2, this.pitch)) };
@@ -292,7 +309,7 @@ export class SolarScene {
       };
       this.focusId = id;
     }
-    this.onFocus?.(id);
+    if (!silent) this.onFocus?.(id);
   }
 
   home() { this.flyTo('sun', { distance: 14, pitch: 0.75 }); }
@@ -322,8 +339,10 @@ export class SolarScene {
       e.preventDefault();
       const min = this.minLogDist();
       this.flight = null;
-      this.logDist = Math.max(min, Math.min(Math.log(400), this.logDist + e.deltaY * 0.0015));
+      this.logDist = Math.max(min, Math.min(Math.log(400), this.logDist + e.deltaY * 0.003));
       this.onArrive = null;
+      // Zooming in on Earth down to the globe's own framing hands over to the globe.
+      if (e.deltaY < 0 && this.focusId === 'earth' && this.logDist < this.returnAt) this.onReturn?.();
     }, { passive: false });
   }
 
@@ -342,7 +361,8 @@ export class SolarScene {
       const d = Math.hypot(item.screen.x - x, item.screen.y - y);
       if (d <= Math.max(14, item.screen.r) && (!best || d < best.d)) best = { d, id: item.id };
     }
-    if (best) { this.flyTo(best.id); this.onPick?.(best.id); }
+    if (best?.id === 'earth') this.onReturn?.(true); // clicking Earth goes to the globe
+    else if (best) { this.flyTo(best.id); this.onPick?.(best.id); }
   }
 
   // ── Frame ────────────────────────────────────────────────────────────
@@ -420,7 +440,7 @@ export class SolarScene {
       this.camera.aspect = w / h;
     }
     // Keep the focused body clear of the side panel on wide screens.
-    const shift = w > 720 ? Math.min(360, w * 0.44) / 2 : 0;
+    const shift = this.inset && w > 720 ? Math.min(360, w * 0.44) / 2 : 0;
     this.camera.setViewOffset(w, h, shift, 0, w, h);
     const focusBody = this.bodies.get(this.focusId);
     const pxPerAU = (dist) => h / 2 / Math.tan((this.camera.fov / 2) * RAD) / dist;
@@ -449,7 +469,7 @@ export class SolarScene {
       b.group.scale.setScalar(shown);
       if (b.orbit) {
         const dist = this.camera.position.distanceTo(b.pos);
-        b.orbit.visible = moon ? b.near : dist > 0.15;
+        b.orbit.visible = this.showOrbits && (moon ? b.near : dist > 0.15);
         if (!moon) b.orbit.material.opacity = Math.min(0.45, dist * 0.08);
       }
       if (b.id === 'sun') { b.glow.position.copy(b.pos); b.glow.scale.setScalar(shown * 7); }
@@ -459,7 +479,7 @@ export class SolarScene {
       place(s, 0, true);
       s.dot.position.copy(s.pos);
       s.dot.scale.setScalar(Math.max(dist * 0.006, 1e-7));
-      s.line.visible = dist > 0.5 || this.focusId === s.id;
+      s.line.visible = this.showOrbits && (dist > 0.5 || this.focusId === s.id);
     }
     this.belt.material.opacity = Math.max(0.05, Math.min(0.7, this.camera.position.length() * 0.05));
   }

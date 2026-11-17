@@ -4298,9 +4298,14 @@
   "NASA/JPL data is unavailable right now": "Дані NASA/JPL зараз недоступні",
   "Close approaches, next 60 days": "Зближення із Землею найближчі 60 днів",
   "Recent fireballs": "Нещодавні боліди",
-  "More at NASA": "Докладніше на сайті NASA",
   "Open solar system view": "Відкрити вигляд Сонячної системи",
   "Overview": "Огляд",
   "Asteroids and comets": "Астероїди та комети",
-  "Drag to rotate · scroll to zoom · click a body to fly to it": "Перетягуйте для обертання · прокрутка для масштабу · натисніть на тіло, щоб долетіти"
+  "Drag to rotate · scroll to zoom · click a body to fly to it": "Перетягуйте для обертання · прокрутка для масштабу · натисніть на тіло, щоб долетіти",
+  "Top view": "Вигляд зверху",
+  "Side view": "Вигляд збоку",
+  "Hide interface": "Сховати інтерфейс",
+  "Show interface": "Показати інтерфейс",
+  "Bodies": "Тіла",
+  "Orbits": "Орбіти"
 }

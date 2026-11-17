@@ -16,6 +16,14 @@ const { open } = storeToRefs(store);
 const AU_LIGHT_MIN = 8.3167;
 const AU_LD = 389.17;
 const UTC = 'UTC';
+// Reference sites shown as sources on the cards (proper names, not translated).
+const NSSDC = ['NASA NSSDC', 'https://nssdc.gsfc.nasa.gov/planetary/factsheet/'];
+const JPL_SSD = ['JPL SSD', 'https://ssd.jpl.nasa.gov/planets/phys_par.html'];
+const sbdbLinks = (des) => [
+  ['JPL SBDB', `https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/?sstr=${encodeURIComponent(des)}`],
+  ['Minor Planet Center', `https://minorplanetcenter.net/db_search/show_object?object_id=${encodeURIComponent(des)}`],
+  ['ESA NEOCC', 'https://neo.ssa.esa.int/'],
+];
 const LD = 'LD'; // lunar distances
 
 const SPEEDS = [[1, 'LIVE'], [3600, '1 h/s'], [86400, '1 d/s'], [2592000, '30 d/s'], [31557600, '1 y/s']];
@@ -23,6 +31,12 @@ const SPEEDS = [[1, 'LIVE'], [3600, '1 h/s'], [86400, '1 d/s'], [2592000, '30 d/
 const NAMED = [['1', 'Ceres'], ['4', 'Vesta'], ['2', 'Pallas'], ['433', 'Eros'], ['101955', 'Bennu'], ['99942', 'Apophis'], ['1P', 'Halley'], ['67P', '67P/Churyumov–Gerasimenko']];
 
 const tab = ref('planets');
+const listOpen = ref(false);
+const labelsOn = ref(true);
+const orbitsOn = ref(true);
+const uiHidden = ref(false);
+const hint = ref(true);
+const viewMode = ref(null); // 'top' | 'side' | null
 const speed = ref(1);
 const clock = ref('');
 const entered = ref(false);
@@ -48,7 +62,8 @@ function showBody(id) {
     live.push(['Distance from Sun (now)', `${sun.toFixed(3)} AU`]);
     if (body.id !== 'earth') live.push(['Distance from Earth (now)', `${earth.toFixed(3)} AU · light time ${(earth * AU_LIGHT_MIN).toFixed(1)} min`]);
   }
-  selected.value = { ...body, facts: [...live, ...body.facts], note: body.note };
+  const links = [body.url && ['NASA', body.url], PLANETS.includes(body) || body === SUN ? NSSDC : null, JPL_SSD].filter(Boolean);
+  selected.value = { ...body, facts: [...live, ...body.facts], note: body.note, links };
 }
 
 const fmt = (n, d = 2) => (Number.isFinite(+n) ? (+n).toFixed(d) : '—');
@@ -63,7 +78,7 @@ async function getJson(path) {
 
 // One small body's card: what we know now, then orbit and physical data from JPL.
 async function showSmall(des, name, base = []) {
-  const card = { id: des, name, kind: 'Small body', facts: base, note: 'Loading orbit and physical data from NASA/JPL Small-Body Database…', url: `https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/?sstr=${encodeURIComponent(des)}` };
+  const card = { id: des, name, kind: 'Small body', facts: base, note: 'Loading orbit and physical data from NASA/JPL Small-Body Database…', links: sbdbLinks(des) };
   selected.value = card;
   try {
     const b = await getJson(`body?des=${encodeURIComponent(des)}`);
@@ -106,11 +121,17 @@ function selectFireball(f) {
       ['Total radiated energy', `${f.energy} × 10¹⁰ J`], ['Calculated total impact energy', `${f['impact-e']} kt TNT`],
     ],
     note: 'Source: NASA/JPL CNEOS Fireball Data API. Orange dots on Earth mark these fireballs.',
-    url: 'https://cneos.jpl.nasa.gov/fireballs/',
+    links: [['NASA CNEOS', 'https://cneos.jpl.nasa.gov/fireballs/']],
   };
 }
 
-const selectOther = (item) => (selected.value = item);
+const selectOther = (item) => (selected.value = {
+  ...item,
+  links: item.kind === 'Star'
+    ? [['SIMBAD', `https://simbad.cds.unistra.fr/simbad/sim-id?Ident=${encodeURIComponent(item.name)}`], ['ESA Gaia', 'https://www.esa.int/Science_Exploration/Space_Science/Gaia']]
+    : [['IMO', 'https://www.imo.net/'], ['NASA', 'https://science.nasa.gov/solar-system/meteors-meteorites/']],
+});
+const cardLinks = computed(() => selected.value?.links ?? []);
 
 // ── Live NASA/JPL data ─────────────────────────────────────────────────
 const small = ref({ state: 'idle', approaches: [], fireballs: [] });
@@ -142,16 +163,24 @@ watch([open, tab], () => {
 
 // ── Scene ──────────────────────────────────────────────────────────────
 function onFocus(id) {
+  viewMode.value = null;
   if (CARDS.has(id)) showBody(id);
   else if (scene?.small.has(id)) showSmall(id, scene.small.get(id).name);
 }
 
-function leave() {
+// Hand over to the globe: place its camera where this view looks at Earth, then fade out.
+let closing = false;
+function finish() {
+  if (closing) return;
+  closing = true;
+  if (scene) store.writeView(scene.earthView());
+  entered.value = false;
+  setTimeout(() => ((open.value = false), (closing = false)), 500);
+}
+function leave(fly = true) {
   if (!scene) return void (open.value = false);
-  scene.backToEarth(() => {
-    entered.value = false;
-    setTimeout(() => (open.value = false), 500);
-  });
+  if (fly) scene.backToEarth(finish);
+  else finish();
 }
 const onKey = (e) => {
   if (e.key === 'Escape') leave();
@@ -167,10 +196,13 @@ watch(open, async (isOpen) => {
     return;
   }
   speed.value = 1;
+  hint.value = true;
+  setTimeout(() => (hint.value = false), 8000);
   await nextTick();
   const { SolarScene } = await import('../../../solar/solarScene.js');
   if (!open.value) return;
-  scene = new SolarScene(canvas.value, labels.value, { onPick: () => {}, onFocus });
+  scene = new SolarScene(canvas.value, labels.value, { onPick: () => {}, onFocus, onReturn: (fly) => leave(Boolean(fly)) });
+  scene.showOrbits = orbitsOn.value;
   scene.intro(store.readView());
   timer = setInterval(() => (clock.value = new Date(scene.getTime()).toISOString().slice(0, 19).replace('T', ' ')), 250);
   requestAnimationFrame(() => (entered.value = true));
@@ -182,6 +214,13 @@ onBeforeUnmount(() => {
   clearInterval(timer);
   scene?.dispose();
 });
+
+watch(orbitsOn, (on) => scene && (scene.showOrbits = on));
+watch([listOpen, selected, uiHidden], () => scene && (scene.inset = !uiHidden.value && (listOpen.value || Boolean(selected.value))), { flush: 'post' });
+function cycleView() {
+  viewMode.value = viewMode.value === 'top' ? 'side' : 'top';
+  scene?.systemView(viewMode.value);
+}
 
 function setSpeed(v) {
   speed.value = v;
@@ -199,27 +238,34 @@ const fly = (id) => scene?.flyTo(id);
 </script>
 
 <template>
-<div v-if="open" id="solar-system-view" :class="{ 'is-on': entered }" role="dialog" :aria-label="t('Solar system')">
+<div v-if="open" id="solar-system-view" :class="{ 'is-on': entered, 'no-labels': !labelsOn }" role="dialog" :aria-label="t('Solar system')">
   <div class="ss-stage">
     <canvas ref="canvas" :aria-label="t('Orbits of the planets')"></canvas>
     <div ref="labels" class="ss-labels"></div>
   </div>
-  <header class="ss-head">
+  <button v-if="uiHidden" type="button" class="ss-restore" :title="t('Show interface')" :aria-label="t('Show interface')" @click="uiHidden = false"><span class="material-symbols-outlined" aria-hidden="true">visibility</span></button>
+  <header v-if="!uiHidden" class="ss-head">
     <span class="material-symbols-outlined" aria-hidden="true">travel_explore</span>
     <strong>{{ t('Solar system') }}</strong>
     <span class="ss-date">{{ clock }} {{ UTC }}</span>
     <span class="ss-speeds" role="group" :aria-label="t('Time speed')">
       <button v-for="[v, label] in SPEEDS" :key="v" type="button" :aria-pressed="String(speed === v)" @click="setSpeed(v)">{{ label }}</button>
     </span>
-    <button type="button" @click="scene?.home()">{{ t('Overview') }}</button>
+    <button type="button" :aria-pressed="String(viewMode !== null)" @click="cycleView"><span class="material-symbols-outlined" aria-hidden="true">view_in_ar</span>{{ viewMode === 'top' ? t('Side view') : t('Top view') }}</button>
+    <button type="button" @click="viewMode = null; scene?.home()">{{ t('Overview') }}</button>
+    <button type="button" class="ss-icon" :aria-pressed="String(listOpen)" :title="t('Bodies')" :aria-label="t('Bodies')" @click="listOpen = !listOpen"><span class="material-symbols-outlined" aria-hidden="true">layers</span></button>
+    <button type="button" class="ss-icon" :aria-pressed="String(labelsOn)" :title="t('Labels')" :aria-label="t('Labels')" @click="labelsOn = !labelsOn"><span class="material-symbols-outlined" aria-hidden="true">label</span></button>
+    <button type="button" class="ss-icon" :aria-pressed="String(orbitsOn)" :title="t('Orbits')" :aria-label="t('Orbits')" @click="orbitsOn = !orbitsOn"><span class="material-symbols-outlined" aria-hidden="true">timeline</span></button>
+    <button type="button" class="ss-icon" :title="t('Hide interface')" :aria-label="t('Hide interface')" @click="uiHidden = true"><span class="material-symbols-outlined" aria-hidden="true">visibility_off</span></button>
     <button type="button" class="ss-close" @click="leave"><span class="material-symbols-outlined" aria-hidden="true">public</span>{{ t('Back to Earth') }}</button>
   </header>
-  <p class="ss-hint">{{ t('Drag to rotate · scroll to zoom · click a body to fly to it') }}</p>
-  <aside class="ss-side">
-    <nav class="ss-tabs" role="tablist">
+  <p v-if="hint && !uiHidden" class="ss-hint">{{ t('Drag to rotate · scroll to zoom · click a body to fly to it') }}</p>
+  <aside v-if="!uiHidden && (listOpen || selected)" class="ss-side" :class="{ compact: !listOpen }">
+    <button v-if="selected && !listOpen" type="button" class="ss-x" :aria-label="t('Close')" @click="selected = null"><span class="material-symbols-outlined" aria-hidden="true">close</span></button>
+    <nav v-show="listOpen" class="ss-tabs" role="tablist">
       <button v-for="[id, label] in tabs" :key="id" type="button" role="tab" :aria-selected="String(tab === id)" @click="tab = id">{{ label }}</button>
     </nav>
-    <ul class="ss-list">
+    <ul v-show="listOpen" class="ss-list">
       <template v-if="tab === 'planets'">
         <template v-for="b in [SUN, ...PLANETS]" :key="b.id">
           <li><button type="button" :aria-pressed="String(selected?.id === b.id)" @click="fly(b.id)"><i :style="{ background: b.color }"></i>{{ b.name }}<small>{{ b.kind }}</small></button></li>
@@ -250,7 +296,7 @@ const fly = (id) => scene?.flyTo(id);
       <p class="ss-kind">{{ selected.kind }}</p>
       <dl><template v-for="[k, v] in selected.facts" :key="k"><dt>{{ k }}</dt><dd>{{ v }}</dd></template></dl>
       <p v-if="selected.note" class="ss-note">{{ selected.note }}</p>
-      <a v-if="selected.url" :href="selected.url" target="_blank" rel="noopener noreferrer">{{ t('More at NASA') }}</a>
+      <p v-if="cardLinks.length" class="ss-links"><span>{{ t('Sources') }}</span><a v-for="[name, url] in cardLinks" :key="name" :href="url" target="_blank" rel="noopener noreferrer">{{ name }}</a></p>
     </section>
   </aside>
 </div>

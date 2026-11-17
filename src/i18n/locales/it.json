@@ -4205,9 +4205,14 @@
   "NASA/JPL data is unavailable right now": "I dati NASA/JPL non sono disponibili al momento",
   "Close approaches, next 60 days": "Avvicinamenti alla Terra, prossimi 60 giorni",
   "Recent fireballs": "Bolidi recenti",
-  "More at NASA": "Altro sulla NASA",
   "Open solar system view": "Apri la vista del sistema solare",
   "Overview": "Panoramica",
   "Asteroids and comets": "Asteroidi e comete",
-  "Drag to rotate · scroll to zoom · click a body to fly to it": "Trascina per ruotare · scorri per ingrandire · clicca un corpo per raggiungerlo"
+  "Drag to rotate · scroll to zoom · click a body to fly to it": "Trascina per ruotare · scorri per ingrandire · clicca un corpo per raggiungerlo",
+  "Top view": "Vista dall’alto",
+  "Side view": "Vista laterale",
+  "Hide interface": "Nascondi interfaccia",
+  "Show interface": "Mostra interfaccia",
+  "Bodies": "Corpi celesti",
+  "Orbits": "Orbite"
 }

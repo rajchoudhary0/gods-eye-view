@@ -4112,9 +4112,14 @@
   "NASA/JPL data is unavailable right now": "Data från NASA/JPL är inte tillgänglig just nu",
   "Close approaches, next 60 days": "Jordnära passager, kommande 60 dagar",
   "Recent fireballs": "Senaste eldkulorna",
-  "More at NASA": "Mer hos NASA",
   "Open solar system view": "Öppna solsystemsvyn",
   "Overview": "Översikt",
   "Asteroids and comets": "Asteroider och kometer",
-  "Drag to rotate · scroll to zoom · click a body to fly to it": "Dra för att rotera · scrolla för att zooma · klicka på en kropp för att flyga dit"
+  "Drag to rotate · scroll to zoom · click a body to fly to it": "Dra för att rotera · scrolla för att zooma · klicka på en kropp för att flyga dit",
+  "Top view": "Ovanifrån",
+  "Side view": "Från sidan",
+  "Hide interface": "Dölj gränssnittet",
+  "Show interface": "Visa gränssnittet",
+  "Bodies": "Himlakroppar",
+  "Orbits": "Banor"
 }

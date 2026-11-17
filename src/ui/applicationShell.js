@@ -1782,6 +1782,13 @@ export class StyleManager extends ShellFacade {
         heightM: magnitude(p) - 6.371e6,
       };
     });
+    // The reverse: place the globe camera where the solar view looked at Earth, so
+    // closing the view leaves the globe exactly as it was seen. Latitude here is
+    // geocentric; the globe wants geodetic.
+    store.setViewWriter(({ lat, lon, heightM }) => {
+      const geodetic = toDegrees(Math.atan(Math.tan(toRadians(lat)) / 0.99330562));
+      findCamera(this.viewer)?.setView({ destination: { lon, lat: geodetic, height: heightM } });
+    });
     const canvas = canvasOf(this.viewer);
     const onWheel = (event) => {
       const p = pose()?.position;
@@ -1791,6 +1798,7 @@ export class StyleManager extends ShellFacade {
     this._offSolarZoomOut = () => {
       canvas?.removeEventListener?.('wheel', onWheel);
       store.setViewReader(null);
+      store.setViewWriter(null);
     };
   }
 

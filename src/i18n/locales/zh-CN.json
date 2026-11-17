@@ -4019,9 +4019,14 @@
   "NASA/JPL data is unavailable right now": "NASA/JPL 数据暂时不可用",
   "Close approaches, next 60 days": "未来 60 天的近地飞掠",
   "Recent fireballs": "近期火流星",
-  "More at NASA": "在 NASA 了解更多",
   "Open solar system view": "打开太阳系视图",
   "Overview": "总览",
   "Asteroids and comets": "小行星和彗星",
-  "Drag to rotate · scroll to zoom · click a body to fly to it": "拖动旋转 · 滚动缩放 · 点击天体飞往该处"
+  "Drag to rotate · scroll to zoom · click a body to fly to it": "拖动旋转 · 滚动缩放 · 点击天体飞往该处",
+  "Top view": "俯视图",
+  "Side view": "侧视图",
+  "Hide interface": "隐藏界面",
+  "Show interface": "显示界面",
+  "Bodies": "天体",
+  "Orbits": "轨道"
 }

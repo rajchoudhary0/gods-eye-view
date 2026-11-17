@@ -4298,9 +4298,14 @@
   "NASA/JPL data is unavailable right now": "Данные NASA/JPL сейчас недоступны",
   "Close approaches, next 60 days": "Сближения с Землёй в ближайшие 60 дней",
   "Recent fireballs": "Недавние болиды",
-  "More at NASA": "Подробнее на сайте NASA",
   "Open solar system view": "Открыть вид Солнечной системы",
   "Overview": "Обзор",
   "Asteroids and comets": "Астероиды и кометы",
-  "Drag to rotate · scroll to zoom · click a body to fly to it": "Перетаскивайте для вращения · прокрутка для масштаба · нажмите на тело, чтобы подлететь"
+  "Drag to rotate · scroll to zoom · click a body to fly to it": "Перетаскивайте для вращения · прокрутка для масштаба · нажмите на тело, чтобы подлететь",
+  "Top view": "Вид сверху",
+  "Side view": "Вид сбоку",
+  "Hide interface": "Скрыть интерфейс",
+  "Show interface": "Показать интерфейс",
+  "Bodies": "Тела",
+  "Orbits": "Орбиты"
 }

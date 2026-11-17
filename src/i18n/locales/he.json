@@ -4205,9 +4205,14 @@
   "NASA/JPL data is unavailable right now": "נתוני NASA/JPL אינם זמינים כרגע",
   "Close approaches, next 60 days": "התקרבויות לכדור הארץ ב-60 הימים הקרובים",
   "Recent fireballs": "כדורי אש אחרונים",
-  "More at NASA": "עוד אצל נאס״א",
   "Open solar system view": "פתיחת תצוגת מערכת השמש",
   "Overview": "סקירה כללית",
   "Asteroids and comets": "אסטרואידים ושביטים",
-  "Drag to rotate · scroll to zoom · click a body to fly to it": "גררו לסיבוב · גללו להגדלה · לחצו על גוף כדי לטוס אליו"
+  "Drag to rotate · scroll to zoom · click a body to fly to it": "גררו לסיבוב · גללו להגדלה · לחצו על גוף כדי לטוס אליו",
+  "Top view": "מבט מלמעלה",
+  "Side view": "מבט מהצד",
+  "Hide interface": "הסתר ממשק",
+  "Show interface": "הצג ממשק",
+  "Bodies": "גרמי שמיים",
+  "Orbits": "מסלולים"
 }
