@@ -1,6 +1,6 @@
 <script setup>
 import { storeToRefs } from 'pinia';
-import { computed } from 'vue';
+import { computed, onBeforeUnmount, ref, watch } from 'vue';
 import { t } from '../../../i18n/index.js';
 import UiButton from '../../kit/UiButton.vue';
 import RailPanel from '../../rail/RailPanel.vue';
@@ -26,12 +26,30 @@ const frameData = computed(() =>
       }
     : {},
 );
+
+// Full screen uses the browser's own and covers live video too. Wide view is
+// the same centred popup the camera card uses, for the still frame; Esc
+// leaves it.
+const wrap = ref(null);
+const wide = ref(false);
+const fullscreen = () => wrap.value?.requestFullscreen?.().catch(() => {});
+const onKey = (e) => {
+  if (e.key === 'Escape') wide.value = false;
+};
+watch(wide, (on) =>
+  document[on ? 'addEventListener' : 'removeEventListener']('keydown', onKey),
+);
+onBeforeUnmount(() => document.removeEventListener('keydown', onKey));
 </script>
 
 <template>
 <RailPanel id="cctv-panel" start-collapsed :title="t('CCTV')" sideways scroll rail-scroller>
     <div class="cyber-panel-body ui-scroll" data-rail-scroller>
-    <div id="cctv-frame-wrap" :class="['cctv-frame-wrap', { loading: frame?.wrapLoading, 'has-frame': frame?.hasFrame }]">
+    <div id="cctv-frame-wrap" ref="wrap" :class="['cctv-frame-wrap', { loading: frame?.wrapLoading, 'has-frame': frame?.hasFrame }]">
+      <span class="cctv-frame-tools">
+        <button v-if="!live && frame?.src" type="button" :aria-label="t('Wide view')" :title="t('Wide view')" @click="wide = true"><span class="material-symbols-outlined" aria-hidden="true">open_in_full</span></button>
+        <button type="button" :aria-label="t('Full screen')" :title="t('Full screen')" @click="fullscreen"><span class="material-symbols-outlined" aria-hidden="true">fullscreen</span></button>
+      </span>
       <span class="cctv-frame-caption" aria-hidden="true">{{ t('ACQUIRING FRAME') }}</span>
       <img id="cctv-frame" alt="CCTV feed frame" :class="{ active: frame?.hasFrame }" :src="frame?.src || undefined" :hidden="live" v-bind="frameData" />
       <canvas id="cctv-video" class="cctv-frame" :hidden="!live"></canvas>
@@ -79,4 +97,16 @@ const frameData = computed(() =>
     <div id="cctv-summary">{{ summary ?? t('Enable CCTV to start camera-linked intelligence summaries.') }}</div>
     </div>
 </RailPanel>
+<Teleport to="body">
+  <div v-if="wide" class="cctv-popup" role="dialog" :aria-label="t('Wide view')" @click.self="wide = false">
+    <figure class="cctv-popup__card">
+      <header class="cctv-popup__head">
+        <span class="material-symbols-outlined" aria-hidden="true">videocam</span>
+        <strong>{{ t('CCTV') }}</strong>
+        <button type="button" class="cctv-popup__close" :aria-label="t('Close')" @click="wide = false"><span class="material-symbols-outlined" aria-hidden="true">close</span></button>
+      </header>
+      <img :src="frame?.src" alt="CCTV feed frame" />
+    </figure>
+  </div>
+</Teleport>
 </template>

@@ -4096,6 +4096,8 @@
   "Course to {code}: {course}": "Kurs nach {code}: {course}",
   "Over {place}": "Über {place}",
   "Below": "Darunter",
+  "Wide view": "Breitansicht",
+  "Full screen": "Vollbild"
   "Place labels on": "Ortsnamen ein",
   "Place labels off": "Ortsnamen aus",
   "Show or hide place labels": "Ortsnamen ein- oder ausblenden"

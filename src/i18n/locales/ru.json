@@ -4282,6 +4282,8 @@
   "Course to {code}: {course}": "Курс на {code}: {course}",
   "Over {place}": "Над: {place}",
   "Below": "Под спутником",
+  "Wide view": "Широкий вид",
+  "Full screen": "Во весь экран"
   "Place labels on": "Названия мест включены",
   "Place labels off": "Названия мест выключены",
   "Show or hide place labels": "Показать или скрыть названия мест"
