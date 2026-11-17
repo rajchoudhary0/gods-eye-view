@@ -18,6 +18,7 @@ import bismarckMandanNd from './entries/bismarck-mandan-nd.json' with { type: 'j
 import bkgTopplusOpen from './entries/bkg-topplus-open.json' with { type: 'json' };
 import cctvFloridaFl511 from './entries/cctv-florida-fl511.json' with { type: 'json' };
 import cctvLithuania from './entries/cctv-lithuania.json' with { type: 'json' };
+import cctvNzta from './entries/cctv-nzta.json' with { type: 'json' };
 import cctvNycDot from './entries/cctv-nyc-dot.json' with { type: 'json' };
 import ctStatewideImagery from './entries/ct-statewide-imagery.json' with { type: 'json' };
 import dakotaCountyMn from './entries/dakota-county-mn.json' with { type: 'json' };
@@ -117,6 +118,7 @@ export const LIBRARY_MANIFESTS = Object.freeze([
   bkgTopplusOpen,
   cctvFloridaFl511,
   cctvLithuania,
+  cctvNzta,
   cctvNycDot,
   ctStatewideImagery,
   dakotaCountyMn,

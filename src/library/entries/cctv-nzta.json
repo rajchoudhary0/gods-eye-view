@@ -1,0 +1,24 @@
+{
+  "id": "cctv-nzta",
+  "kind": "pack",
+  "family": "cameras",
+  "title": "New Zealand highway cameras (NZTA)",
+  "provider": "NZ Transport Agency Waka Kotahi",
+  "description": "NZTA highway-camera stills across New Zealand, added to the CCTV layer. Off until NZTA confirms the image licence.",
+  "icon": "◉",
+  "maintainer": "core",
+  "coverage": { "countries": ["NZ"], "bbox": [166.0, -48.5, 179.0, -34.0] },
+  "source": { "format": "host", "url": "https://trafficnz.info/" },
+  "pack": { "host": "cctv", "env": "CCTV_NZTA_ENABLED" },
+  "licence": {
+    "name": "NZTA traffic and travel API terms; camera image licence unconfirmed",
+    "url": "https://nzta.govt.nz/traffic-and-travel-information/use-our-data/terms-of-use",
+    "operatorOptIn": true
+  },
+  "attribution": {
+    "text": "NZ Transport Agency Waka Kotahi",
+    "url": "https://trafficnz.info/"
+  },
+  "status": "verified",
+  "reviewed": "2026-11-18"
+}

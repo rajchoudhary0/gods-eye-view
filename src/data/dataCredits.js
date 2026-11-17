@@ -324,6 +324,13 @@ export const DATA_CREDITS = [
       '<a href="https://eismoinfo.lt/" target="_blank" rel="noopener">Via Lietuva / Eismoinfo</a>; periodically updated images',
   },
   {
+    key: 'nzta-cctv',
+    html:
+      // Opt-in: no open licence is stated for the camera images.
+      'Highway camera stills (New Zealand, when enabled): ' +
+      '<a href="https://trafficnz.info/" target="_blank" rel="noopener">NZ Transport Agency Waka Kotahi</a>; periodically updated images',
+  },
+  {
     key: 'taiwan-cctv',
     html:
       'Freeway camera stills (Taiwan): ' +
