@@ -345,3 +345,42 @@ html:not([lang='en']) #cctv-camera-select {
   flex: 1 1 100%;
   order: -1;
 }
+
+/* Wide view and full screen for the frame. */
+.cctv-frame-tools {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  z-index: 2;
+  display: flex;
+  gap: 4px;
+}
+.cctv-frame-tools button {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  color: #cfeaf0;
+  background: rgba(8, 12, 18, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 6px;
+  cursor: pointer;
+}
+.cctv-frame-tools .material-symbols-outlined {
+  font-size: 18px;
+}
+.cctv-frame-wrap:fullscreen {
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 0;
+  background: #000;
+}
+.cctv-frame-wrap:fullscreen #cctv-frame,
+.cctv-frame-wrap:fullscreen #cctv-video {
+  width: 100vw;
+  height: 100vh;
+  aspect-ratio: auto;
+  object-fit: contain;
+}

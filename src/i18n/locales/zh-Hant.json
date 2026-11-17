@@ -4002,5 +4002,7 @@
   "KT": "kt",
   "Course to {code}: {course}": "前往 {code} 的航向：{course}",
   "Over {place}": "{place}上空",
-  "Below": "下方"
+  "Below": "下方",
+  "Wide view": "寬檢視",
+  "Full screen": "全螢幕"
 }

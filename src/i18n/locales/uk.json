@@ -4281,5 +4281,7 @@
   "KT": "ВУЗ",
   "Course to {code}: {course}": "Курс на {code}: {course}",
   "Over {place}": "Над: {place}",
-  "Below": "Під супутником"
+  "Below": "Під супутником",
+  "Wide view": "Широкий вигляд",
+  "Full screen": "На весь екран"
 }

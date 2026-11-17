@@ -4002,5 +4002,7 @@
   "KT": "KT",
   "Course to {code}: {course}": "{code}への針路: {course}",
   "Over {place}": "{place}上空",
-  "Below": "直下"
+  "Below": "直下",
+  "Wide view": "ワイド表示",
+  "Full screen": "全画面"
 }

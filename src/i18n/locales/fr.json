@@ -4188,5 +4188,7 @@
   "KT": "KT",
   "Course to {code}: {course}": "Cap vers {code} : {course}",
   "Over {place}": "Au-dessus de {place}",
-  "Below": "En dessous"
+  "Below": "En dessous",
+  "Wide view": "Vue large",
+  "Full screen": "Plein écran"
 }
