@@ -4100,5 +4100,19 @@
   "Full screen": "Helskärm",
   "Place labels on": "Ortnamn på",
   "Place labels off": "Ortnamn av",
-  "Show or hide place labels": "Visa eller dölj ortnamn"
+  "Show or hide place labels": "Visa eller dölj ortnamn",
+  "Planets": "Planeter",
+  "Small bodies": "Småkroppar",
+  "Meteor showers": "Meteorsvärmar",
+  "Solar system": "Solsystemet",
+  "Time speed": "Tidshastighet",
+  "Today": "Idag",
+  "Back to Earth": "Tillbaka till jorden",
+  "Orbits of the planets": "Planeternas banor",
+  "Loading NASA/JPL data…": "Läser in data från NASA/JPL…",
+  "NASA/JPL data is unavailable right now": "Data från NASA/JPL är inte tillgänglig just nu",
+  "Close approaches, next 60 days": "Jordnära passager, kommande 60 dagar",
+  "Recent fireballs": "Senaste eldkulorna",
+  "More at NASA": "Mer hos NASA",
+  "Open solar system view": "Öppna solsystemsvyn"
 }

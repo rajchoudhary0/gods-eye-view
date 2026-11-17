@@ -31,6 +31,7 @@ import { gnssIntegrityProxy } from './gnssIntegrity.js';
 import { ghostMapsProxy } from './ghostMaps.js';
 import { shipwrecksProxy } from './shipwrecks.js';
 import { droneAirspaceProxy } from './droneAirspace.js';
+import { spaceObjectsProxy } from './spaceObjects.js';
 import { newsProxy } from './news.js';
 import { inaturalistProxy } from './inaturalist/observations.js';
 import { acartiaProxy } from './acartia.js';
@@ -90,6 +91,7 @@ function localProviderPlugins({
     ghostMapsProxy(),
     shipwrecksProxy(),
     droneAirspaceProxy(),
+    spaceObjectsProxy(),
     newsProxy(),
     inaturalistProxy(),
     acartiaProxy(),

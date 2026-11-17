@@ -4007,5 +4007,19 @@
   "Full screen": "全画面",
   "Place labels on": "地名ラベルをオン",
   "Place labels off": "地名ラベルをオフ",
-  "Show or hide place labels": "地名ラベルの表示/非表示"
+  "Show or hide place labels": "地名ラベルの表示/非表示",
+  "Planets": "惑星",
+  "Small bodies": "小天体",
+  "Meteor showers": "流星群",
+  "Solar system": "太陽系",
+  "Time speed": "時間の速度",
+  "Today": "現在",
+  "Back to Earth": "地球に戻る",
+  "Orbits of the planets": "惑星の軌道",
+  "Loading NASA/JPL data…": "NASA/JPLのデータを読み込み中…",
+  "NASA/JPL data is unavailable right now": "NASA/JPLのデータは現在利用できません",
+  "Close approaches, next 60 days": "地球への接近(今後60日間)",
+  "Recent fireballs": "最近の火球",
+  "More at NASA": "NASAで詳しく見る",
+  "Open solar system view": "太陽系ビューを開く"
 }

@@ -37,7 +37,10 @@ import {
   setCyberSonarControls,
 } from './cyberSonarControls.js';
 
-import { toDegrees, toRadians } from '../geo/index.js';
+import { magnitude, toDegrees, toRadians } from '../geo/index.js';
+
+// Camera height past which a further zoom-out opens the solar-system view.
+const SOLAR_ZOOM_OUT_M = 36_000_000;
 // A viewer with no renderer bound gets its ports (camera, effects, globe)
 // once its owner has loaded the package's `./render/cesium/unbound` export.
 import { cameraOf, canvasOf, findCamera } from '../render/rendererOf.js';
@@ -77,6 +80,7 @@ import { installEntityContext } from './entityContextBridge.js';
 import { installRailEdgeScroll } from './railEdgeScroll.js';
 import { useCockpitStore } from './stores/cockpit.js';
 import { useGlobeActionsStore } from './stores/globeActions.js';
+import { useSolarSystemStore } from './stores/solarSystem.js';
 import { useRecordingStore } from './stores/recording.js';
 import { onPlacePacksLoadingChange } from '../data/placeBelow.js';
 import { withPlacePacks } from './placePacksLoading.js';
@@ -675,6 +679,7 @@ export class StyleManager extends ShellFacade {
     this._initMobileShell();
     this._initShareButton();
     this._initCameraOrientationControls();
+    this._initSolarZoomOut();
     this._initClearSelectedLayersButton();
     this._initHUDToggle();
     this._initModels3dToggle();
@@ -1751,6 +1756,28 @@ export class StyleManager extends ShellFacade {
     this._resetToken = null;
   }
 
+  /**
+   * Zooming out past the globe's own ceiling opens the solar-system view:
+   * a wheel step outward while the camera is already near its highest.
+   */
+  _initSolarZoomOut() {
+    this._offSolarZoomOut?.();
+    const canvas = canvasOf(this.viewer);
+    if (!canvas?.addEventListener) return;
+    const onWheel = (event) => {
+      if (event.deltaY <= 0) return;
+      let pose = null;
+      try {
+        pose = findCamera(this.viewer)?.pose() ?? null;
+      } catch {}
+      // ponytail: 6.371e6 is a spherical Earth radius; fine for a 36,000 km trigger.
+      if (pose && magnitude(pose.position) - 6.371e6 > SOLAR_ZOOM_OUT_M)
+        useSolarSystemStore(applicationPinia()).open = true;
+    };
+    canvas.addEventListener('wheel', onWheel, { passive: true });
+    this._offSolarZoomOut = () => canvas.removeEventListener('wheel', onWheel);
+  }
+
   /** The place-name overlay layer, added on first use; null when the engine has none. */
   _ensurePlaceLabels() {
     if (this._placeLabels) return this._placeLabels;
@@ -1945,6 +1972,7 @@ export class StyleManager extends ShellFacade {
     useDisplayStore(applicationPinia()).connectMapSource(null);
     useDisplayStore(applicationPinia()).publishMapSource(null);
     this._cameraOrientationControls?.destroy();
+    this._offSolarZoomOut?.();
     this._releaseGlobeActions();
     this._cctvControls?.destroy();
     this.services?.streetLevelLayer?.attachNavigation?.(null);
