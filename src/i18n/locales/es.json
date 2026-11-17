@@ -4188,5 +4188,8 @@
   "KT": "KT",
   "Course to {code}: {course}": "Rumbo a {code}: {course}",
   "Over {place}": "Sobre {place}",
-  "Below": "Debajo"
+  "Below": "Debajo",
+  "Place labels on": "Etiquetas de lugares activadas",
+  "Place labels off": "Etiquetas de lugares desactivadas",
+  "Show or hide place labels": "Mostrar u ocultar etiquetas de lugares"
 }

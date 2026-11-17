@@ -4002,5 +4002,8 @@
   "KT": "KT",
   "Course to {code}: {course}": "{code}への針路: {course}",
   "Over {place}": "{place}上空",
-  "Below": "直下"
+  "Below": "直下",
+  "Place labels on": "地名ラベルをオン",
+  "Place labels off": "地名ラベルをオフ",
+  "Show or hide place labels": "地名ラベルの表示/非表示"
 }

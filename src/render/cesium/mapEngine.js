@@ -15,6 +15,7 @@ import { loadPhotorealisticTileset } from './google3d.js';
 import { viewerBehind } from './viewers.js';
 import {
   createEsriImagery,
+  createEsriLabelsImagery,
   createIonImagery,
   createOsmImagery,
 } from './mapImagery.js';
@@ -24,6 +25,7 @@ export const cesiumMapEngine = Object.freeze({
   imagery: Object.freeze({
     osm: createOsmImagery,
     esri: createEsriImagery,
+    labels: createEsriLabelsImagery,
     /** `style`: the ion world imagery asset (`MAP_STACKS`' `style`). */
     ion: createIonImagery,
   }),

@@ -27,6 +27,9 @@ const ESRI_MISSING_TILE =
 const OSM_MAX_LEVEL = 19;
 const OSM_TILES = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
 const OSM_CREDIT = '© OpenStreetMap contributors';
+const ESRI_LABEL_TILES =
+  'https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}';
+
 /** Cesium ion's world imagery assets (`MAP_STACKS`' `style`). */
 const WORLD_STYLES = { 2: 'aerial', 3: 'aerialLabels' };
 
@@ -226,6 +229,15 @@ export const globeMapEngine = Object.freeze({
         tiling: 'webMercator',
         maxLevel: ESRI_MAX_LEVEL,
         fetchTile: fetchEsriTile,
+        credit: credit(ESRI_IMAGERY_CREDIT),
+      }),
+    /** Transparent place-name tiles to draw over any base imagery. */
+    labels: () =>
+      Object.freeze({
+        kind: 'xyz',
+        url: ESRI_LABEL_TILES,
+        tiling: 'webMercator',
+        maxLevel: 19,
         credit: credit(ESRI_IMAGERY_CREDIT),
       }),
     async ion(style, accessToken, { signal } = {}) {

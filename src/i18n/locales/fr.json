@@ -4188,5 +4188,8 @@
   "KT": "KT",
   "Course to {code}: {course}": "Cap vers {code} : {course}",
   "Over {place}": "Au-dessus de {place}",
-  "Below": "En dessous"
+  "Below": "En dessous",
+  "Place labels on": "Noms de lieux activés",
+  "Place labels off": "Noms de lieux désactivés",
+  "Show or hide place labels": "Afficher ou masquer les noms de lieux"
 }

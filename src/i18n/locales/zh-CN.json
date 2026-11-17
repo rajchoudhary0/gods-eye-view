@@ -4002,5 +4002,8 @@
   "KT": "kt",
   "Course to {code}: {course}": "前往 {code} 的航向：{course}",
   "Over {place}": "{place}上空",
-  "Below": "下方"
+  "Below": "下方",
+  "Place labels on": "地名标签已开启",
+  "Place labels off": "地名标签已关闭",
+  "Show or hide place labels": "显示或隐藏地名标签"
 }

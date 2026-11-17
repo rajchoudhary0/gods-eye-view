@@ -1,6 +1,6 @@
 <script setup>
 import { storeToRefs } from 'pinia';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { t } from '../../../i18n/index.js';
 import { useGlobeActionsStore } from '../../stores/globeActions.js';
 import GlobeCompass from './GlobeCompass.vue';
@@ -13,6 +13,7 @@ import GlobeCompass from './GlobeCompass.vue';
 const globe = useGlobeActionsStore();
 const { clearBusy, resetBusy, camera } = storeToRefs(globe);
 const { act } = globe;
+const labelsOn = ref(true);
 const tilted = computed(() => Boolean(camera.value?.tilted));
 </script>
 
@@ -26,6 +27,9 @@ const tilted = computed(() => Boolean(camera.value?.tilted));
   </button>
   <button id="tilt-map-view" type="button" :aria-label="tilted ? t('Return map to straight-down view') : t('Tilt map to oblique view')" :aria-pressed="String(tilted)" :title="t('Toggle straight-down and tilted map views')" @click="act('tilt')">
     <span class="material-symbols-outlined" aria-hidden="true">view_in_ar</span>
+  </button>
+  <button id="toggle-place-labels" type="button" :aria-label="t('Show or hide place labels')" :aria-pressed="String(labelsOn)" :title="t('Show or hide place labels')" @click="labelsOn = !labelsOn; act('labels')">
+    <span class="material-symbols-outlined" aria-hidden="true">label</span>
   </button>
   <GlobeCompass @click="act('northUp')" />
   <button id="reset-globe-view" type="button" :aria-label="resetBusy ? t('Resetting to full globe view') : t('Reset to full globe view')" :title="t('Reset camera and return to full globe view')" @click="act('reset')">

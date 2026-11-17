@@ -4467,5 +4467,8 @@
   "KT": "عقدة",
   "Course to {code}: {course}": "المسار إلى {code}: {course}",
   "Over {place}": "فوق {place}",
-  "Below": "في الأسفل"
+  "Below": "في الأسفل",
+  "Place labels on": "تشغيل أسماء الأماكن",
+  "Place labels off": "إيقاف أسماء الأماكن",
+  "Show or hide place labels": "إظهار أسماء الأماكن أو إخفاؤها"
 }

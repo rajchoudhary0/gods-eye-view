@@ -4281,5 +4281,8 @@
   "KT": "УЗ",
   "Course to {code}: {course}": "Курс на {code}: {course}",
   "Over {place}": "Над: {place}",
-  "Below": "Под спутником"
+  "Below": "Под спутником",
+  "Place labels on": "Названия мест включены",
+  "Place labels off": "Названия мест выключены",
+  "Show or hide place labels": "Показать или скрыть названия мест"
 }
