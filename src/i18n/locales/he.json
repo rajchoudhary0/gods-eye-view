@@ -4199,7 +4199,6 @@
   "Meteor showers": "מטרי מטאורים",
   "Solar system": "מערכת השמש",
   "Time speed": "מהירות הזמן",
-  "Today": "היום",
   "Back to Earth": "חזרה לכדור הארץ",
   "Orbits of the planets": "מסלולי כוכבי הלכת",
   "Loading NASA/JPL data…": "טוען נתוני NASA/JPL…",
@@ -4207,5 +4206,8 @@
   "Close approaches, next 60 days": "התקרבויות לכדור הארץ ב-60 הימים הקרובים",
   "Recent fireballs": "כדורי אש אחרונים",
   "More at NASA": "עוד אצל נאס״א",
-  "Open solar system view": "פתיחת תצוגת מערכת השמש"
+  "Open solar system view": "פתיחת תצוגת מערכת השמש",
+  "Overview": "סקירה כללית",
+  "Asteroids and comets": "אסטרואידים ושביטים",
+  "Drag to rotate · scroll to zoom · click a body to fly to it": "גררו לסיבוב · גללו להגדלה · לחצו על גוף כדי לטוס אליו"
 }

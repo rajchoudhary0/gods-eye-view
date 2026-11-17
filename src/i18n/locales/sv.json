@@ -4106,7 +4106,6 @@
   "Meteor showers": "Meteorsvärmar",
   "Solar system": "Solsystemet",
   "Time speed": "Tidshastighet",
-  "Today": "Idag",
   "Back to Earth": "Tillbaka till jorden",
   "Orbits of the planets": "Planeternas banor",
   "Loading NASA/JPL data…": "Läser in data från NASA/JPL…",
@@ -4114,5 +4113,8 @@
   "Close approaches, next 60 days": "Jordnära passager, kommande 60 dagar",
   "Recent fireballs": "Senaste eldkulorna",
   "More at NASA": "Mer hos NASA",
-  "Open solar system view": "Öppna solsystemsvyn"
+  "Open solar system view": "Öppna solsystemsvyn",
+  "Overview": "Översikt",
+  "Asteroids and comets": "Asteroider och kometer",
+  "Drag to rotate · scroll to zoom · click a body to fly to it": "Dra för att rotera · scrolla för att zooma · klicka på en kropp för att flyga dit"
 }

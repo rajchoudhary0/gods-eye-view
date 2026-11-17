@@ -1762,20 +1762,36 @@ export class StyleManager extends ShellFacade {
    */
   _initSolarZoomOut() {
     this._offSolarZoomOut?.();
-    const canvas = canvasOf(this.viewer);
-    if (!canvas?.addEventListener) return;
-    const onWheel = (event) => {
-      if (event.deltaY <= 0) return;
-      let pose = null;
+    const store = useSolarSystemStore(applicationPinia());
+    const pose = () => {
       try {
-        pose = findCamera(this.viewer)?.pose() ?? null;
-      } catch {}
-      // ponytail: 6.371e6 is a spherical Earth radius; fine for a 36,000 km trigger.
-      if (pose && magnitude(pose.position) - 6.371e6 > SOLAR_ZOOM_OUT_M)
-        useSolarSystemStore(applicationPinia()).open = true;
+        return findCamera(this.viewer)?.pose() ?? null;
+      } catch {
+        return null;
+      }
     };
-    canvas.addEventListener('wheel', onWheel, { passive: true });
-    this._offSolarZoomOut = () => canvas.removeEventListener('wheel', onWheel);
+    // The globe camera as geocentric latitude, longitude and height, for the
+    // solar-system view to start from the same view of Earth.
+    // ponytail: 6.371e6 is a spherical Earth radius; fine for framing.
+    store.setViewReader(() => {
+      const p = pose()?.position;
+      if (!p) return null;
+      return {
+        lat: toDegrees(Math.atan2(p.z, Math.hypot(p.x, p.y))),
+        lon: toDegrees(Math.atan2(p.y, p.x)),
+        heightM: magnitude(p) - 6.371e6,
+      };
+    });
+    const canvas = canvasOf(this.viewer);
+    const onWheel = (event) => {
+      const p = pose()?.position;
+      if (event.deltaY > 0 && p && magnitude(p) - 6.371e6 > SOLAR_ZOOM_OUT_M) store.open = true;
+    };
+    canvas?.addEventListener?.('wheel', onWheel, { passive: true });
+    this._offSolarZoomOut = () => {
+      canvas?.removeEventListener?.('wheel', onWheel);
+      store.setViewReader(null);
+    };
   }
 
   /** The place-name overlay layer, added on first use; null when the engine has none. */

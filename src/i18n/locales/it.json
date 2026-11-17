@@ -4199,7 +4199,6 @@
   "Meteor showers": "Piogge di meteore",
   "Solar system": "Sistema solare",
   "Time speed": "Velocità del tempo",
-  "Today": "Oggi",
   "Back to Earth": "Torna alla Terra",
   "Orbits of the planets": "Orbite dei pianeti",
   "Loading NASA/JPL data…": "Caricamento dati NASA/JPL…",
@@ -4207,5 +4206,8 @@
   "Close approaches, next 60 days": "Avvicinamenti alla Terra, prossimi 60 giorni",
   "Recent fireballs": "Bolidi recenti",
   "More at NASA": "Altro sulla NASA",
-  "Open solar system view": "Apri la vista del sistema solare"
+  "Open solar system view": "Apri la vista del sistema solare",
+  "Overview": "Panoramica",
+  "Asteroids and comets": "Asteroidi e comete",
+  "Drag to rotate · scroll to zoom · click a body to fly to it": "Trascina per ruotare · scorri per ingrandire · clicca un corpo per raggiungerlo"
 }
