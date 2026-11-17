@@ -28,6 +28,7 @@ import { RadioControls } from './radio.js';
 import { LocalSdrControls } from './localSdrControls.js';
 import { LocationNavigation } from './locationNavigation.js';
 import { bindCameraOrientationControls } from './cameraOrientationControls.js';
+import { mapEngineFor } from '../maps/engine.js';
 import { createMapSourceControls } from './mapSource.js';
 import { STYLES } from './effects.js';
 import { isHudLayout } from '../hudLayouts.js';
@@ -1750,6 +1751,16 @@ export class StyleManager extends ShellFacade {
     this._resetToken = null;
   }
 
+  /** The place-name overlay layer, added on first use; null when the engine has none. */
+  _ensurePlaceLabels() {
+    if (this._placeLabels) return this._placeLabels;
+    const engine = this.viewer && mapEngineFor(this.viewer);
+    if (!engine?.imagery?.labels) return null;
+    const layer = engine.createImageryLayer(engine.imagery.labels());
+    engine.addImageryLayer(this.viewer, layer);
+    return (this._placeLabels = layer);
+  }
+
   /** Wire Google Maps-style tilt and north-up camera actions. */
   _initCameraOrientationControls() {
     const store = useGlobeActionsStore(applicationPinia());
@@ -1758,8 +1769,21 @@ export class StyleManager extends ShellFacade {
     const token = store.connect({
       tilt: () => controls.tilt(),
       northUp: () => controls.northUp(),
+      labels: () => {
+        const engine = mapEngineFor(this.viewer);
+        const on = !this._placeLabels;
+        if (on) this._ensurePlaceLabels();
+        else {
+          engine.removeImageryLayer(this.viewer, this._placeLabels);
+          this._placeLabels = null;
+        }
+        engine.requestRender?.(this.viewer);
+        this._showToast(on ? t('Place labels on') : t('Place labels off'));
+      },
     });
     this._orientationToken = token;
+    // Labels start on; the button toggles them.
+    this._ensurePlaceLabels?.();
     // A newer shell's controls own what the buttons show.
     const controls = bindCameraOrientationControls({
       viewer: this.viewer,
