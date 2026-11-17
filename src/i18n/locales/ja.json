@@ -4013,7 +4013,6 @@
   "Meteor showers": "流星群",
   "Solar system": "太陽系",
   "Time speed": "時間の速度",
-  "Today": "現在",
   "Back to Earth": "地球に戻る",
   "Orbits of the planets": "惑星の軌道",
   "Loading NASA/JPL data…": "NASA/JPLのデータを読み込み中…",
@@ -4021,5 +4020,8 @@
   "Close approaches, next 60 days": "地球への接近(今後60日間)",
   "Recent fireballs": "最近の火球",
   "More at NASA": "NASAで詳しく見る",
-  "Open solar system view": "太陽系ビューを開く"
+  "Open solar system view": "太陽系ビューを開く",
+  "Overview": "全体表示",
+  "Asteroids and comets": "小惑星と彗星",
+  "Drag to rotate · scroll to zoom · click a body to fly to it": "ドラッグで回転 · スクロールでズーム · 天体をクリックして移動"
 }

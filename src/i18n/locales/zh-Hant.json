@@ -4013,7 +4013,6 @@
   "Meteor showers": "流星雨",
   "Solar system": "太陽系",
   "Time speed": "時間速度",
-  "Today": "今天",
   "Back to Earth": "返回地球",
   "Orbits of the planets": "行星軌道",
   "Loading NASA/JPL data…": "正在載入 NASA/JPL 資料…",
@@ -4021,5 +4020,8 @@
   "Close approaches, next 60 days": "未來 60 天的近地飛掠",
   "Recent fireballs": "近期火流星",
   "More at NASA": "在 NASA 了解更多",
-  "Open solar system view": "開啟太陽系檢視"
+  "Open solar system view": "開啟太陽系檢視",
+  "Overview": "總覽",
+  "Asteroids and comets": "小行星和彗星",
+  "Drag to rotate · scroll to zoom · click a body to fly to it": "拖曳旋轉 · 捲動縮放 · 點擊天體飛往該處"
 }

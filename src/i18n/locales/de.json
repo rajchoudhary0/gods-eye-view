@@ -4106,7 +4106,6 @@
   "Meteor showers": "Meteorschauer",
   "Solar system": "Sonnensystem",
   "Time speed": "Zeitgeschwindigkeit",
-  "Today": "Heute",
   "Back to Earth": "Zurück zur Erde",
   "Orbits of the planets": "Umlaufbahnen der Planeten",
   "Loading NASA/JPL data…": "NASA/JPL-Daten werden geladen…",
@@ -4114,5 +4113,8 @@
   "Close approaches, next 60 days": "Erdnahe Vorbeiflüge in den nächsten 60 Tagen",
   "Recent fireballs": "Letzte Feuerkugeln",
   "More at NASA": "Mehr bei der NASA",
-  "Open solar system view": "Sonnensystem-Ansicht öffnen"
+  "Open solar system view": "Sonnensystem-Ansicht öffnen",
+  "Overview": "Übersicht",
+  "Asteroids and comets": "Asteroiden und Kometen",
+  "Drag to rotate · scroll to zoom · click a body to fly to it": "Ziehen zum Drehen · Scrollen zum Zoomen · Himmelskörper anklicken zum Hinfliegen"
 }

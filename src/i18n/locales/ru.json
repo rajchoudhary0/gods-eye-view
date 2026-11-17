@@ -4292,7 +4292,6 @@
   "Meteor showers": "Метеорные потоки",
   "Solar system": "Солнечная система",
   "Time speed": "Скорость времени",
-  "Today": "Сегодня",
   "Back to Earth": "Назад к Земле",
   "Orbits of the planets": "Орбиты планет",
   "Loading NASA/JPL data…": "Загрузка данных NASA/JPL…",
@@ -4300,5 +4299,8 @@
   "Close approaches, next 60 days": "Сближения с Землёй в ближайшие 60 дней",
   "Recent fireballs": "Недавние болиды",
   "More at NASA": "Подробнее на сайте NASA",
-  "Open solar system view": "Открыть вид Солнечной системы"
+  "Open solar system view": "Открыть вид Солнечной системы",
+  "Overview": "Обзор",
+  "Asteroids and comets": "Астероиды и кометы",
+  "Drag to rotate · scroll to zoom · click a body to fly to it": "Перетаскивайте для вращения · прокрутка для масштаба · нажмите на тело, чтобы подлететь"
 }

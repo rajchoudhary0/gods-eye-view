@@ -4478,7 +4478,6 @@
   "Meteor showers": "زخات الشهب",
   "Solar system": "النظام الشمسي",
   "Time speed": "سرعة الزمن",
-  "Today": "اليوم",
   "Back to Earth": "العودة إلى الأرض",
   "Orbits of the planets": "مدارات الكواكب",
   "Loading NASA/JPL data…": "جارٍ تحميل بيانات ناسا/JPL…",
@@ -4486,5 +4485,8 @@
   "Close approaches, next 60 days": "الاقترابات من الأرض خلال 60 يومًا",
   "Recent fireballs": "الكرات النارية الأخيرة",
   "More at NASA": "المزيد لدى ناسا",
-  "Open solar system view": "فتح عرض النظام الشمسي"
+  "Open solar system view": "فتح عرض النظام الشمسي",
+  "Overview": "نظرة عامة",
+  "Asteroids and comets": "الكويكبات والمذنبات",
+  "Drag to rotate · scroll to zoom · click a body to fly to it": "اسحب للتدوير · مرّر للتكبير · انقر على جرم للانتقال إليه"
 }
